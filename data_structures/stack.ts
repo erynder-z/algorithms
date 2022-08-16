@@ -3,6 +3,7 @@ interface IStack<T> {
   pop(): T | undefined;
   peek(): T | undefined;
   size(): number;
+  // Typescript interfaces don't allow to define private properties, therefore storage and capacity are omitted in IStack interface.
 }
 
 class Stack<T> implements IStack<T> {
