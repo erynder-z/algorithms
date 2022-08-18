@@ -23,8 +23,8 @@ class Stack {
 const stack = new Stack();
 stack.push('A');
 stack.push('B');
-console.log(stack.size()); // Output: 2
-console.log(stack.peek()); // Output: "B"
-console.log(stack.size()); // Output: 2
-console.log(stack.pop()); // Output: "B"
-console.log(stack.size()); // Output: 1
+stack.size(); // Output: 2
+stack.peek(); // Output: "B"
+stack.size(); // Output: 2
+stack.pop(); // Output: "B"
+stack.size(); // Output: 1
