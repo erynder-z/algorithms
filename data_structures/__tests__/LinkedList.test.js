@@ -1,5 +1,33 @@
 const linkedList = require('../LinkedList');
 
+describe('#size', () => {
+  it('returns the length ot the list', () => {
+    const ll = new linkedList();
+    ll.insertAtHead(10);
+    const oldLength = ll.size();
+    ll.insertAtHead(20);
+
+    expect(oldLength).toBe(1);
+    expect(ll.size()).toBe(2);
+  });
+});
+
+describe('#getHead', () => {
+  it('returns the head-node', () => {
+    const ll = linkedList.fromValues(10, 20);
+
+    expect(ll.getHead().value).toBe(10);
+  });
+});
+
+describe('#getTail', () => {
+  it('returns the tail-node', () => {
+    const ll = linkedList.fromValues(10, 20);
+
+    expect(ll.getTail().value).toBe(20);
+  });
+});
+
 describe('#insertAtHead', () => {
   it('adds the elment to the beginning of the list', () => {
     const ll = new linkedList();
@@ -10,6 +38,18 @@ describe('#insertAtHead', () => {
     expect(ll.head.value).toBe(20);
     expect(ll.head.next).toBe(oldHead);
     expect(ll.length).toBe(2);
+  });
+});
+
+describe('#insertAtTail', () => {
+  it('adds the elment to the end of the list', () => {
+    const ll = linkedList.fromValues(10, 20);
+    ll.insertAtTail(30);
+    const node = ll.getByIndex(2);
+
+    expect(ll.getByIndex(2).value).toBe(30);
+    expect(node.next).toBe(null);
+    expect(ll.length).toBe(3);
   });
 });
 
@@ -102,6 +142,17 @@ describe('#removeHead', () => {
   });
 });
 
+describe('#removeTail', () => {
+  it('removes the tail', () => {
+    const ll = linkedList.fromValues(10, 20, 30);
+    ll.removeTail();
+
+    expect(ll.head.value).toBe(10);
+    expect(ll.getTail().value).toBe(20);
+    expect(ll.length).toBe(2);
+  });
+});
+
 describe('#removeAtIndex', () => {
   describe('with index less than 0', () => {
     it('does not remove anything', () => {
@@ -141,6 +192,38 @@ describe('#removeAtIndex', () => {
       expect(node.value).toBe(20);
       expect(node.next.value).toBe(40);
       expect(ll.length).toBe(3);
+    });
+  });
+});
+
+describe('#contains', () => {
+  describe('if the list contains the element', () => {
+    it('returns true', () => {
+      const ll = linkedList.fromValues(10, 20, 30);
+      expect(ll.contains(20)).toBe(true);
+    });
+  });
+
+  describe('if the list does not contains the element', () => {
+    it('returns false', () => {
+      const ll = linkedList.fromValues(10, 20, 30);
+      expect(ll.contains(40)).toBe(false);
+    });
+  });
+});
+
+describe('#find', () => {
+  describe('if the list contains the element', () => {
+    it('returns the index of that element', () => {
+      const ll = linkedList.fromValues(10, 20, 30);
+      expect(ll.find(20)).toBe(1);
+    });
+  });
+
+  describe('if the list does not contains the element', () => {
+    it('returns null', () => {
+      const ll = linkedList.fromValues(10, 20, 30);
+      expect(ll.find(40)).toBe(null);
     });
   });
 });

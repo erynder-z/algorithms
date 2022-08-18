@@ -7,14 +7,42 @@ class LinkedList<T> {
     this.head = null;
     this.length = 0;
   }
+  // get size of list
+  size(): number | null {
+    return this.length;
+  }
 
-  insertAtHead(data: T): void {
-    const newNode = new LinkedListNode<T>(data, this.head);
+  // get value at beginning of list
+  getHead(): LinkedListNode<T> | null {
+    return this.head;
+  }
+
+  // get value at end of list
+  getTail(): LinkedListNode<T> | null {
+    if (this.length < 1) return this.getHead();
+    return this.getByIndex(this.length - 1);
+  }
+
+  // insert value at beginning of list
+  insertAtHead(value: T): void {
+    const newNode = new LinkedListNode<T>(value, this.head);
 
     this.head = newNode;
     this.length++;
   }
 
+  // insert value at end if list
+  insertAtTail(value: T): void | null {
+    if (this.length === 1) return this.insertAtHead(value);
+
+    const prev = this.getByIndex(this.length - 1);
+    if (prev == null) return null;
+
+    prev.next = new LinkedListNode(value, prev.next);
+    this.length++;
+  }
+
+  // get value at given index
   getByIndex(index: number): LinkedListNode<T> | null {
     if (index < 0 || index >= this.length) return null;
 
@@ -27,6 +55,7 @@ class LinkedList<T> {
     return current;
   }
 
+  // insert value at given index
   insertAtIndex(index: number, value: T): void | null {
     if (index === 0) return this.insertAtHead(value);
 
@@ -37,6 +66,7 @@ class LinkedList<T> {
     this.length++;
   }
 
+  // remove value from beginning of list
   removeHead(): void {
     if (this.head) {
       this.head = this.head?.next;
@@ -44,7 +74,14 @@ class LinkedList<T> {
     }
   }
 
-  // helper function for testing
+  // remove value from end of list
+  removeTail(): void {
+    if (this.length > 0) {
+      this.removeAtIndex(this.length - 1);
+    }
+  }
+
+  // remove value at given index
   removeAtIndex(index: number): void | null {
     if (index === 0) return this.removeHead();
 
@@ -56,7 +93,40 @@ class LinkedList<T> {
     }
   }
 
-  // helper function for testing
+  // check if list contains value
+  contains(value: T): boolean {
+    let current = this.head;
+    for (let i = 0; i < this.length; i++) {
+      if (current?.value === value) {
+        return true;
+      }
+      if (current?.next) {
+        current = current?.next;
+      }
+    }
+    return false;
+  }
+
+  // return index of given value
+  find(value: T): number | null {
+    if (!this.head) {
+      return null;
+    }
+    let index = 0;
+    let current = this.head;
+    for (let i = 0; i < this.length; i++) {
+      if (current?.value === value) {
+        return index;
+      }
+      if (current.next) {
+        current = current?.next;
+      }
+      index++;
+    }
+    return null;
+  }
+
+  // log list as string
   print() {
     let output: string = '';
     let current = this.head;
@@ -78,6 +148,7 @@ class LinkedListNode<T> {
   }
 }
 
+// helper function for testing
 LinkedList.fromValues = function (...values) {
   const ll = new LinkedList();
   for (let i = values.length - 1; i >= 0; i--) {
