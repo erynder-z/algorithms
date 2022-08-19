@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.mergeSort = void 0;
 const mergeSort = (arr) => {
     const merge = (leftArray, rightArray) => {
         let sorted = [];
@@ -18,6 +20,7 @@ const mergeSort = (arr) => {
     }
     const left = arr.splice(0, halfArray);
     const right = arr;
-    return merge(mergeSort(left), mergeSort(right));
+    return merge((0, exports.mergeSort)(left), (0, exports.mergeSort)(right));
 };
-console.log(mergeSort([8, 4, 1, 3, 9, 69, 999, 45654, 111, 0])); //[ 0, 1, 3, 4, 8, 9, 69, 111, 999, 45654]
+exports.mergeSort = mergeSort;
+/* console.log(mergeSort([8, 4, 1, 3, 9, 69, 999, 45654, 111, 0]));  */
