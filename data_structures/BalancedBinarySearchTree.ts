@@ -3,10 +3,18 @@ import { mergeSort } from '../recursion/mergeSort';
 class BalancedBinarySearchTree {
   arr: number[] | null;
   root: BinarySearchTreeNode | null;
+  inorderData: number[];
+  preorderData: number[];
+  postorderData: number[];
+
   constructor(arr: number[]) {
     this.arr = [...new Set(mergeSort(arr))];
     this.root = this.buildTree(this.arr, 0, this.arr.length - 1);
+    this.inorderData = [];
+    this.preorderData = [];
+    this.postorderData = [];
   }
+
   buildTree(
     arr: number[],
     start: number,
@@ -69,6 +77,121 @@ class BalancedBinarySearchTree {
       root.rightChild = this.delete(root.data, root.rightChild);
     }
     return root;
+  }
+
+  /* levelOrder(
+    callback: (arg0: BinarySearchTreeNode | null) => any
+  ): BinarySearchTreeNode[] | void {
+    const queue: BinarySearchTreeNode[] | any[] = [this.root];
+    const levelOrderList: BinarySearchTreeNode[] = [];
+    while (queue.length > 0) {
+      const currentNode = queue.shift();
+      callback ? callback(currentNode) : levelOrderList.push(currentNode?.data);
+
+      const enqueueList = [
+        currentNode?.leftChild,
+        currentNode?.rightChild,
+      ].filter((data) => data);
+      queue.push(...enqueueList);
+    }
+    if (levelOrderList.length > 0) return levelOrderList;
+  } */
+
+  levelOrder(root = this.root): number[] | any[] {
+    const queue: BinarySearchTreeNode[] | any[] = [];
+    const result: number[] = [];
+
+    if (root == null) return [];
+
+    queue.push(root);
+
+    while (queue.length > 0) {
+      let current = queue.shift();
+      if (current) {
+        result.push(current.data);
+      }
+
+      if (current?.leftChild !== null) queue.push(current?.leftChild);
+      if (current?.rightChild !== null) queue.push(current?.rightChild);
+    }
+    return result;
+  }
+
+  inorder(root = this.root): number[] | any[] {
+    if (root == null) return [];
+
+    if (root.leftChild !== null) {
+      this.inorder(root.leftChild);
+    }
+
+    if (root.data) {
+      this.inorderData.push(root.data);
+    }
+
+    if (root.rightChild !== null) {
+      this.inorder(root.rightChild);
+    }
+    return this.inorderData;
+  }
+
+  preorder(root = this.root): number[] | any[] {
+    if (root == null) return [];
+
+    if (root.data) {
+      this.preorderData.push(root.data);
+    }
+
+    if (root.leftChild !== null) {
+      this.preorder(root.leftChild);
+    }
+
+    if (root.rightChild !== null) {
+      this.preorder(root.rightChild);
+    }
+    return this.preorderData;
+  }
+
+  postorder(root = this.root): number[] | any[] {
+    if (root == null) return [];
+
+    if (root.leftChild !== null) {
+      this.postorder(root.leftChild);
+    }
+
+    if (root.rightChild !== null) {
+      this.postorder(root.rightChild);
+    }
+
+    if (root.data) {
+      this.postorderData.push(root.data);
+    }
+    return this.postorderData;
+  }
+
+  height(root = this.root): number {
+    if (root == null) {
+      return 0;
+    } else {
+      let leftHeight = this.height(root.leftChild);
+      let rightHeight = this.height(root.rightChild);
+
+      return Math.max(leftHeight, rightHeight) + 1;
+    }
+  }
+
+  depth(
+    nodeData: number,
+    node = this.root,
+    currentDepth: number = 0
+  ): number | null {
+    if (!node) return null;
+    if (node.data === nodeData) return currentDepth;
+
+    if (node.data < nodeData) {
+      return this.depth(nodeData, node.rightChild, currentDepth + 1);
+    } else {
+      return this.depth(nodeData, node.leftChild, currentDepth + 1);
+    }
   }
 }
 

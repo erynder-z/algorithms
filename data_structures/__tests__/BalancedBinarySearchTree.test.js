@@ -305,3 +305,93 @@ describe('#delete', () => {
     });
   });
 });
+
+describe('#levelOrder', () => {
+  it('return an array of all valuies in the tree in breadth-first level order', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+
+    expect(bbst.levelOrder()).toEqual([8, 4, 67, 1, 5, 9, 324, 3, 7, 23, 6345]);
+  });
+
+  it('returns an empty array if tree ist empty', () => {
+    const bbst = new balancedBinarySearchTree([]);
+
+    expect(bbst.levelOrder()).toEqual([]);
+  });
+});
+
+describe('#inorder', () => {
+  it('should traverse from the left subtree to the root then to the right subtree and return an array with all tree values', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+
+    expect(bbst.inorder()).toEqual([1, 3, 4, 5, 7, 8, 9, 23, 67, 324, 6345]);
+  });
+
+  it('returns an empty array if tree ist empty', () => {
+    const bbst = new balancedBinarySearchTree([]);
+
+    expect(bbst.inorder()).toEqual([]);
+  });
+});
+
+describe('#preorder', () => {
+  it('should traverse from the root to the left subtree then to the right subtree and return an array with all tree values', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+
+    expect(bbst.preorder()).toEqual([8, 4, 1, 3, 5, 7, 67, 9, 23, 324, 6345]);
+  });
+
+  it('returns an empty array if tree ist empty', () => {
+    const bbst = new balancedBinarySearchTree([]);
+
+    expect(bbst.preorder()).toEqual([]);
+  });
+});
+
+describe('#postorder', () => {
+  it('should traverse from the  left subtree to the right subtree then to the root and return an array with all tree values', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+
+    expect(bbst.postorder()).toEqual([3, 1, 7, 5, 4, 23, 9, 6345, 324, 67, 8]);
+  });
+
+  it('returns an empty array if tree ist empty', () => {
+    const bbst = new balancedBinarySearchTree([]);
+
+    expect(bbst.postorder()).toEqual([]);
+  });
+});
+
+describe('#height', () => {
+  it('should return the largest number of edges in a path from a leaf node to a target node.', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+    const bbst2 = new balancedBinarySearchTree([1, 7, 4]);
+    const bbst3 = new balancedBinarySearchTree([]);
+
+    expect(bbst.height()).toBe(4);
+    expect(bbst2.height()).toBe(2);
+    expect(bbst3.height()).toBe(0);
+  });
+});
+
+describe('#depth', () => {
+  it('should return the total number of edges from the root node to the target node', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+
+    expect(bbst.depth(null)).toBe(null);
+    expect(bbst.depth(4)).toBe(1);
+    expect(bbst.depth(1)).toBe(2);
+  });
+});
