@@ -1,13 +1,13 @@
-### Frequently used algorithms implemented in TypeScript
+## Frequently used algorithms implemented in TypeScript
 
-# queue
+### queue
 
-# stack
+### stack
 
-# merge sort
+### merge sort
 
-# binary search
+### binary search
 
-# linked list
+### linked list
 
-# balanced binary search tree
+### balanced binary search tree
