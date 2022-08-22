@@ -395,3 +395,153 @@ describe('#depth', () => {
     expect(bbst.depth(1)).toBe(2);
   });
 });
+
+describe('#isBalanced', () => {
+  it('should returns true if the tree is balanced', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+
+    expect(bbst.isBalanced()).toBe(true);
+  });
+
+  it('should returns false if the tree is not balanced', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+    bbst.insert(997);
+    bbst.insert(998);
+    bbst.insert(999);
+
+    expect(bbst.isBalanced()).toBe(false);
+  });
+});
+
+describe('#rebalance', () => {
+  it('should returns a balanced tree if it was not blanced', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+
+    bbst.insert(997);
+    bbst.insert(998);
+    bbst.insert(999);
+    expect(bbst.isBalanced()).toBe(false);
+
+    bbst.rebalance();
+
+    expect(bbst.isBalanced()).toBe(true);
+
+    expect(bbst.root).toMatchObject({
+      data: 9,
+      leftChild: {
+        data: 4,
+        leftChild: {
+          data: 1,
+          leftChild: null,
+          rightChild: {
+            data: 3,
+            leftChild: null,
+            rightChild: null,
+          },
+        },
+        rightChild: {
+          data: 7,
+          leftChild: {
+            data: 5,
+            leftChild: null,
+            rightChild: null,
+          },
+          rightChild: {
+            data: 8,
+            leftChild: null,
+            rightChild: null,
+          },
+        },
+      },
+      rightChild: {
+        data: 997,
+        leftChild: {
+          data: 67,
+          leftChild: {
+            data: 23,
+            leftChild: null,
+            rightChild: null,
+          },
+          rightChild: {
+            data: 324,
+            leftChild: null,
+            rightChild: null,
+          },
+        },
+        rightChild: {
+          data: 999,
+          leftChild: {
+            data: 998,
+            leftChild: null,
+            rightChild: null,
+          },
+          rightChild: {
+            data: 6345,
+            leftChild: null,
+            rightChild: null,
+          },
+        },
+      },
+    });
+  });
+
+  it('should not modify the tree if it is already balanced', () => {
+    const bbst = new balancedBinarySearchTree([
+      1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324,
+    ]);
+
+    bbst.rebalance();
+
+    expect(bbst.root).toMatchObject({
+      data: 8,
+      leftChild: {
+        data: 4,
+        leftChild: {
+          data: 1,
+          leftChild: null,
+          rightChild: {
+            data: 3,
+            leftChild: null,
+            rightChild: null,
+          },
+        },
+        rightChild: {
+          data: 5,
+          leftChild: null,
+          rightChild: {
+            data: 7,
+            leftChild: null,
+            rightChild: null,
+          },
+        },
+      },
+      rightChild: {
+        data: 67,
+        leftChild: {
+          data: 9,
+          leftChild: null,
+          rightChild: {
+            data: 23,
+            leftChild: null,
+            rightChild: null,
+          },
+        },
+        rightChild: {
+          data: 324,
+          leftChild: null,
+          rightChild: {
+            data: 6345,
+            leftChild: null,
+            rightChild: null,
+          },
+        },
+      },
+    });
+  });
+});

@@ -67,23 +67,6 @@ class BalancedBinarySearchTree {
         }
         return root;
     }
-    /* levelOrder(
-      callback: (arg0: BinarySearchTreeNode | null) => any
-    ): BinarySearchTreeNode[] | void {
-      const queue: BinarySearchTreeNode[] | any[] = [this.root];
-      const levelOrderList: BinarySearchTreeNode[] = [];
-      while (queue.length > 0) {
-        const currentNode = queue.shift();
-        callback ? callback(currentNode) : levelOrderList.push(currentNode?.data);
-  
-        const enqueueList = [
-          currentNode?.leftChild,
-          currentNode?.rightChild,
-        ].filter((data) => data);
-        queue.push(...enqueueList);
-      }
-      if (levelOrderList.length > 0) return levelOrderList;
-    } */
     levelOrder(root = this.root) {
         const queue = [];
         const result = [];
@@ -154,19 +137,6 @@ class BalancedBinarySearchTree {
             return Math.max(leftHeight, rightHeight) + 1;
         }
     }
-    /*   depth(node: BinarySearchTreeNode, root = this.root): number {
-      let currentDepth = -1;
-      if (!node) return currentDepth;
-  
-      if (
-        root == node ||
-        (currentDepth = this.depth(node, root?.leftChild)) >= 0 ||
-        (currentDepth = this.depth(node, root?.rightChild)) >= 0
-      ) {
-        return currentDepth + 1;
-      }
-      return currentDepth;
-    } */
     depth(nodeData, node = this.root, currentDepth = 0) {
         if (!node)
             return null;
@@ -178,6 +148,23 @@ class BalancedBinarySearchTree {
         else {
             return this.depth(nodeData, node.leftChild, currentDepth + 1);
         }
+    }
+    isBalanced(root = this.root) {
+        var _a, _b;
+        if (root == null)
+            return false;
+        let leftSubtree = (_a = this.root) === null || _a === void 0 ? void 0 : _a.leftChild;
+        let rightSubtree = (_b = this.root) === null || _b === void 0 ? void 0 : _b.rightChild;
+        if (Math.abs(this.height(leftSubtree) - this.height(rightSubtree)) > 1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    rebalance() {
+        const inorderTree = this.inorder();
+        this.root = this.buildTree(inorderTree, 0, inorderTree.length - 1);
     }
 }
 class BinarySearchTreeNode {

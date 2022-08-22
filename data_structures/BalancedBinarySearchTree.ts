@@ -79,24 +79,6 @@ class BalancedBinarySearchTree {
     return root;
   }
 
-  /* levelOrder(
-    callback: (arg0: BinarySearchTreeNode | null) => any
-  ): BinarySearchTreeNode[] | void {
-    const queue: BinarySearchTreeNode[] | any[] = [this.root];
-    const levelOrderList: BinarySearchTreeNode[] = [];
-    while (queue.length > 0) {
-      const currentNode = queue.shift();
-      callback ? callback(currentNode) : levelOrderList.push(currentNode?.data);
-
-      const enqueueList = [
-        currentNode?.leftChild,
-        currentNode?.rightChild,
-      ].filter((data) => data);
-      queue.push(...enqueueList);
-    }
-    if (levelOrderList.length > 0) return levelOrderList;
-  } */
-
   levelOrder(root = this.root): number[] | any[] {
     const queue: BinarySearchTreeNode[] | any[] = [];
     const result: number[] = [];
@@ -192,6 +174,24 @@ class BalancedBinarySearchTree {
     } else {
       return this.depth(nodeData, node.leftChild, currentDepth + 1);
     }
+  }
+
+  isBalanced(root = this.root): boolean {
+    if (root == null) return false;
+
+    let leftSubtree = this.root?.leftChild;
+    let rightSubtree = this.root?.rightChild;
+
+    if (Math.abs(this.height(leftSubtree) - this.height(rightSubtree)) > 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  rebalance(): void {
+    const inorderTree = this.inorder();
+    this.root = this.buildTree(inorderTree, 0, inorderTree.length - 1);
   }
 }
 
